@@ -1,4 +1,4 @@
-# Physics-Informed Neural Networks for Navier-Stokes: TensorFlow 2, PyTorch, and Data-Parallel Versions
+# Physics-Informed Neural Networks for Navier-Stokes: TensorFlow 2, PyTorch, Data-Parallel, and Collocation Versions
 
 This repository contains four adaptations of the physics-informed neural network (PINN) for the
 2D incompressible Navier-Stokes equations (flow past a cylinder), from
@@ -6,7 +6,7 @@ This repository contains four adaptations of the physics-informed neural network
 
 > **Attribution:** This code adapts the original TensorFlow 1 implementation by Maziar Raissi,
 > Paris Perdikaris, and George Em Karniadakis, released under the MIT License. The original
-> copyright and license notices are kept in [LICENSE](LICENSE). The TensorFlow 2, PyTorch, and
+> copyright and license notices are kept in [LICENSE](LICENSE). The TensorFlow 2, PyTorch,
 > data-parallel, and collocation versions here are my adaptations of that code, not the original implementation.
 
 I worked on these as a research intern in the SEEM Lab at Rice University (advisor: Prof. Sahar Bakhshian).
