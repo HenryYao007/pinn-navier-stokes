@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Virtual environments and IDE settings
+.venv/
+.venv1/
+venv/
+.idea/
+.vscode/
+
+# Data (download separately; see main/Data/README.md)
+*.mat
+
+# Generated figures and model checkpoints
+figures/
+*.pdf
+*.eps
+*.png
+*.pt
+*.pth
+*.h5
+*.ckpt
