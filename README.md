@@ -1,13 +1,13 @@
 # Physics-Informed Neural Networks for Navier-Stokes: TensorFlow 2, PyTorch, and Data-Parallel Versions
 
-This repository contains three adaptations of the physics-informed neural network (PINN) for the
+This repository contains four adaptations of the physics-informed neural network (PINN) for the
 2D incompressible Navier-Stokes equations (flow past a cylinder), from
 [Raissi et al.'s original PINNs repository](https://github.com/maziarraissi/PINNs).
 
 > **Attribution:** This code adapts the original TensorFlow 1 implementation by Maziar Raissi,
 > Paris Perdikaris, and George Em Karniadakis, released under the MIT License. The original
 > copyright and license notices are kept in [LICENSE](LICENSE). The TensorFlow 2, PyTorch, and
-> data-parallel versions here are my adaptations of that code, not the original implementation.
+> data-parallel, and collocation versions here are my adaptations of that code, not the original implementation.
 
 I worked on these as a research intern in the SEEM Lab at Rice University (advisor: Prof. Sahar Bakhshian).
 
@@ -32,6 +32,7 @@ Their true values for this dataset are 1.0 and 0.01.
 | [`main/tensorflow2/`](main/tensorflow2) | TensorFlow 2 | Migration of the original TensorFlow 1 code to TensorFlow 2 |
 | [`main/pytorch/`](main/pytorch) | PyTorch | PyTorch reimplementation of the same model |
 | [`main/tensorflow1_data_parallel/`](main/tensorflow1_data_parallel) | TensorFlow 1.x | Data-parallel training across multiple devices |
+| [`main/tensorflow1_collocation_bc/`](main/tensorflow1_collocation_bc) | TensorFlow 1.x | Separate collocation points and a boundary loss |
 | [`Utilities/`](Utilities) | | Plotting helpers from the original repository |
 | [`main/Data/`](main/Data) | | Where the dataset goes (see below) |
 
@@ -56,6 +57,14 @@ Their true values for this dataset are 1.0 and 0.01.
 - Followed by L-BFGS-B refinement, as in the original.
 - Requires TensorFlow 1.x, since it uses sessions, placeholders, and `tf.contrib`.
 
+### Collocation and boundary-loss version (TensorFlow 1.x)
+- Evaluates the Navier-Stokes residuals at 20,000 collocation points sampled uniformly over the
+  domain, separately from the 5,000 points used for the data loss.
+- Adds a boundary loss (`loss_bc`) that fits the velocity at low-velocity points (|u| < 1 and |v| < 1),
+  selected by velocity rather than by the domain's geometric edges.
+- Uses a 6×36 hidden-layer network, trained with Adam followed by L-BFGS-B.
+- Requires TensorFlow 1.x, like the data-parallel version.
+
 ## Getting started
 
 1. **Download the data.** Get `cylinder_nektar_wake.mat` and `cylinder_nektar_t0_vorticity.mat` from the
@@ -64,7 +73,7 @@ Their true values for this dataset are 1.0 and 0.01.
 2. **Install the requirements** for the version you want to run:
    - TensorFlow 2: `pip install tensorflow tensorflow-probability tf-keras numpy scipy matplotlib`
    - PyTorch: `pip install torch numpy scipy`
-   - Data-parallel: TensorFlow 1.15 with Python 3.7 or earlier, plus `numpy scipy matplotlib`
+   - Data-parallel and collocation: TensorFlow 1.15 with Python 3.7 or earlier, plus `numpy scipy matplotlib`
 3. **Run a script from its own folder**, since data and utility paths are relative:
    ```
    cd main/tensorflow2
